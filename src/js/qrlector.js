@@ -23,7 +23,7 @@ scanner.addListener('scan', content => {
             localStorage.setItem("selectQR",content);
             window.location = "../html/picture.html";
         }else{
-            alert('UPS!!! Ese código QR no es de un Punto Eco-Go que elejiste al principio!!!');
+            alert('UPS!!! Ese código QR no es del Punto Eco-Go que seleccionaste al principio!!!');
         }
     }
 
