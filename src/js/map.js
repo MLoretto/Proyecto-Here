@@ -286,11 +286,10 @@ function showRoute(ecoFound){
 
 }
 function qrGo(){
-    console.log(selectedMarket.id);
-    console.log(arma.value);
     if(arma.value === ''){
         alert('debes selecionar un arma.');
     }else{
+        localStorage.setItem("distancia", selectedMarket.distancia); 
         localStorage.setItem("selectId", selectedMarket.id); 
         localStorage.setItem("selectArma",arma.value);
         window.location = "../html/qrlector.html"

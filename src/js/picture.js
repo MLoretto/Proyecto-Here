@@ -1,7 +1,3 @@
-
-
-
-
 const constraints = {
     video: true
   };
@@ -65,14 +61,12 @@ const constraints = {
 
 
 function SendFB(){
-    console.log(firebase.auth().currentUser.uid);
-    console.log('entrando a sendFB');
     let idSelecionado = localStorage.getItem("selectId");
     let armaSelecionado = localStorage.getItem("selectArma");
     let qrSelecionado = localStorage.getItem("selectQR");
-    console.log('arma seleccionada')
-    console.log(armaSelecionado);
     let Puntos = 0;
+    let puntosDistancia = (localStorage.getItem("distancia") / 5).toFixed(0);
+
     switch(armaSelecionado) {
         case '1':
         Puntos = 100;
@@ -87,32 +81,34 @@ function SendFB(){
         Puntos = 450;
         break;
     } 
-    console.log('puntos');
-    console.log(Puntos);
     let puntosObt = 0;
 
-    var review = firebase.database().ref(`usuarios/${firebase.auth().currentUser.uid}/puntos/puntaje`);
-    review.on('value', function(puntos) {
-      console.log('puntos obtenidos');  
-      console.log(puntos.val());
-      let puntaje = Puntos + puntos.val();
-      console.log('puntos Totales');  
-      console.log(puntaje);
+    let grabarPuntos = new Promise((resolve, reject) => {
+        var review = firebase.database().ref(`usuarios/${firebase.auth().currentUser.uid}/puntos/puntaje`);
+        review.on('value', function(puntos) {
 
-      document.getElementById('puntosGanados').innerHTML = Puntos;
+          let puntaje = Puntos + parseInt(puntos.val());
 
-      var instance = M.Modal.getInstance(document.getElementById('modalPublicar'));
-      instance.open();
-      puntosObt  = puntaje;
-    });
-    /*
-    let puntaje = puntosObt;
-    firebase.database().ref(`usuarios/${firebase.auth().currentUser.uid}/puntos`).update({
-        puntaje
-    });
-    */
-    
+          document.getElementById('puntosGanados').innerHTML = Puntos;
+          document.getElementById('puntosCaminados').innerHTML = puntosDistancia;
 
+
+          var instance = M.Modal.getInstance(document.getElementById('modalPublicar'));
+          instance.open();
+          puntosObt  = parseInt(puntaje) + parseInt(puntosDistancia);
+          resolve(puntosObt);
+
+
+        });
+      });
+      
+      grabarPuntos.then((puntosObt) => {
+        console.log('fin de la promesa :' + puntosObt);
+        let puntaje = puntosObt;
+        firebase.database().ref(`usuarios/${firebase.auth().currentUser.uid}/puntos`).update({
+            puntaje
+        });
+      });
 }
 
 
