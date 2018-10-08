@@ -15,7 +15,7 @@ https://mloretto.github.io/Proyecto-Here/
 Para poder ingresar debes registrarte.
 Por cambios en la politicas de privacidad de facebook no es posible acceder con facebook.
 Para poder probar el demo seleccionar el "Punto Eco-Go Golden" y posterior escanear el siguiente código QR
-![QR](assets/img/avatars/Puntoecogolden.png)
+![QR]("assets/img/avatars/Puntoecogolden.png")
 
 ### Contexto
 
